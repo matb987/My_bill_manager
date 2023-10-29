@@ -50,18 +50,20 @@
                                  <td class="border px-4 py-2">{{ $bill->due_date }}</td>
                                  <td class="border px-4 py-2">{{ $bill->paid_date }}</td>
                                  <!-- td with button to mark as paid -->
-                                    <td class="border px-4 py-2">
+                                    <td class="border px-4 py-2 flex flex-row ">
                                     <!-- if bull is not paid display button to mark as paid -->
                                         @if ($bill->paid_date == null)
+                                        
+
                                         <form action="/dashboard/paid/{{ $bill->id }}" method="POST">
                                             @csrf
-                                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Mark as Paid</button>
+                                            <button type="submit" class=" m-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Mark as Paid</button>
                                         </form>
                                         <!-- add button to delete bill -->
                                         <form action="/dashboard/delete/{{ $bill->id }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                                            <button type="submit" class="bg-red-500 m-2 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
                                         </form>
                                         @else 
                                         <p class="font-dancing-script text-green-400 text-bold">PAID</p>
