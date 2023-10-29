@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\bills;
+use App\Http\Middleware\subscription;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,13 +20,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 //route for dashboard using bills controller
-Route::get('/dashboard', [bills::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+
+    //check if user is subscribed 
+    Route::middleware([subscription::class])->group(function () {
+        Route::get('/dashboard', [bills::class, 'index'])->name('dashboard');
+    });
+    //billing portal
+    
+    Route::get('/billing-portal', function (Request $request) {
+        return Auth::user()->redirectToBillingPortal(route('dashboard'));
+    })->name('billing-portal');
     //bill routes
 
     //route to mark bill as paid
