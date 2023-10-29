@@ -32,6 +32,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/dashboard/paid/{id}', [bills::class, 'paid']);
     //route to reset all bills to unpaid
     Route::post('/dashboard/reset', [bills::class, 'reset']);
+    //delete bill
+    Route::delete('/dashboard/delete/{id}', [bills::class, 'delete']);
+    //route to create new bill
+    Route::post('/dashboard', [bills::class, 'create']);
 
 });
 

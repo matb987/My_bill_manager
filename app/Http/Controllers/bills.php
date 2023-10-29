@@ -11,7 +11,8 @@ class bills extends Controller
     public function index()
     {
         $bills = billsmodel::where('user_id', auth()->user()->id)->get();
-        return view('dashboard', ['bills' => $bills]);
+        $left_to_pay = $bills->sum('amount') - $bills->where('paid_date', '!=', null)->sum('amount');
+        return view('dashboard', ['bills' => $bills , 'left_to_pay' => $left_to_pay]);
     }
 
     //create new bill for current user and return view dashboard
@@ -55,6 +56,13 @@ class bills extends Controller
 
         return redirect('/dashboard');
     }
+    // delete bill
+    public function delete($id)
+    {
+        $bill = billsmodel::find($id);
+        $bill->delete();
 
+        return redirect('/dashboard');
+    }
     
 }

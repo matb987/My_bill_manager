@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* add class to use font dancing script */
+.font-dancing-script {
+        font-family: 'Dancing Script', cursive;
+}
+
+
