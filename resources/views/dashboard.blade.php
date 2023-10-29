@@ -27,9 +27,36 @@
                                  <td class="border px-4 py-2">£{{ $bill->amount }}</td>
                                  <td class="border px-4 py-2">{{ $bill->due_date }}</td>
                                  <td class="border px-4 py-2">{{ $bill->paid_date }}</td>
-                                 <td class="border px-5 py-2">BUTTON WILL GO HERE</td>
+                                 <!-- td with button to mark as paid -->
+                                    <td class="border px-4 py-2">
+                                    <!-- if bull is not paid display button to mark as paid -->
+                                        @if ($bill->paid_date == null)
+                                        <form action="/dashboard/paid/{{ $bill->id }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Mark as Paid</button>
+                                        </form>
+                                        @else 
+                                        PAID
+                                        @endif    
+                                    
                             </tr>
                             @endforeach
+                            <!-- row to show total amount of bills -->
+                            <tr>
+                                <td class="border px-4 py-2">Total</td>
+                                <td class="border px-4 py-2">£{{ $bills->sum('amount') }}</td>
+                                <td class="border px-4 py-2"></td>
+                                <td class="border px-4 py-2"></td>
+                                <!-- td with button to reset paid dates -->
+                                <td class="border px-4 py-2">
+                                    <form action="/dashboard/reset" method="POST">
+                                        @csrf
+                                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Reset</button>
+                                    </form>
+                            </tr>
+
+                            <!-- Total left to pay -->
+                             
                           </tbody>
                         </table>
                 </div>

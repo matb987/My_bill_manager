@@ -33,5 +33,28 @@ class bills extends Controller
         return redirect('/dashboard');
     }
 
+    //function to add paid date as current date for bill
+
+    public function paid($id)
+    {
+        $bill = billsmodel::find($id);
+        $bill->paid_date = date('Y-m-d');
+        $bill->save();
+
+        return redirect('/dashboard');
+    }
+
+    //reset paid date for all bills for current user
+    public function reset()
+    {
+        $bills = billsmodel::where('user_id', auth()->user()->id)->get();
+        foreach ($bills as $bill) {
+            $bill->paid_date = null;
+            $bill->save();
+        }
+
+        return redirect('/dashboard');
+    }
+
     
 }
